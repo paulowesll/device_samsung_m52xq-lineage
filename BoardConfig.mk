@@ -56,6 +56,16 @@ TARGET_KERNEL_CONFIG := m52xq_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/m52xq
 TARGET_KERNEL_CLANG_COMPILE := true
 
+# Kernel modules
+BOOT_KERNEL_MODULES := \
+   synaptics_ts.ko \
+   sec_secure_touch.ko \
+
+KERNEL_MODULES_LOAD_RAW := $(strip $(shell cat device/samsung/m52xq/modules.load))
+KERNEL_MODULES_LOAD := $(foreach m,$(KERNEL_MODULES_LOAD_RAW),$(notdir $(m)))
+BOARD_VENDOR_KERNEL_MODULES_LOAD := $(filter-out $(BOOT_KERNEL_MODULES), $(KERNEL_MODULES_LOAD))
+BOARD_VENDOR_RAMDISK_KERNEL_MODULES_LOAD := $(filter $(BOOT_KERNEL_MODULES), $(KERNEL_MODULES_LOAD))
+
 # Partitions
 BOARD_FLASH_BLOCK_SIZE := 262144 # (BOARD_KERNEL_PAGESIZE * 64)
 BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
