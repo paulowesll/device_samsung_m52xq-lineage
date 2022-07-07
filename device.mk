@@ -11,6 +11,10 @@ PRODUCT_CHARACTERISTICS := nosdcard
 PRODUCT_BUILD_SUPER_PARTITION := false
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
+# APN
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/configs/etc/apns-conf.xml:system/etc/apns-conf.xml
+
 # Overlays
 PRODUCT_ENFORCE_RRO_TARGETS := *
 
